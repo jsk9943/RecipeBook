@@ -1,0 +1,46 @@
+.menuDetail {
+    overflow: hidden;
+    text-align: left;
+    background-color: rgba(255, 200, 105, 0.5);
+    border-radius: 20px;
+    padding: 10px 20px;
+    margin: 10px;
+}
+
+.menuDetail>p {
+    text-align: right;
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
+.menuDetail>input {
+    float: right;
+    border: none;
+    background-color: rgb(255, 0, 0);
+    width: 10%;
+    padding: 10px;
+    font-weight: bold;
+    transition: all 0.3s;
+    border-radius: 10px;
+}
+
+.menuDetail>input:hover {
+    background-color: rgb(185, 5, 5);
+    color: white;
+    cursor: pointer;
+}
+
+#recipePhotoSize {
+    overflow: hidden;
+    width: 100%;
+}
+
+#recipePhotoSize>h2 {
+    float: left;
+}
+
+#recipePhotoSize>img {
+    float: right;
+    vertical-align: bottom;
+    width: 40%;
+}

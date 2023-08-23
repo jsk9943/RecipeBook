@@ -1,0 +1,16 @@
+header {
+    background-color: rgba(111, 133, 108, 0.8);
+    padding:20px;
+    text-align: center;
+    border-radius: 0px 0px 25px 25px;
+    box-shadow: 0 5px 5px;
+    cursor: pointer;
+}
+
+header>div{
+    font-size:2em;
+}
+
+header>div>span {
+    font-family: 'Bebas Neue', sans-serif;
+}

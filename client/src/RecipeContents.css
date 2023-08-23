@@ -1,0 +1,52 @@
+.menuDiv {
+    text-align: center;
+}
+
+.menu {
+    width: 90%;
+    background-color: rgba(255, 200, 105, 0.5);
+    border-radius: 20px;
+    box-sizing: border-box;
+    margin: 5px;
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.menu>h2 {
+    float: left;
+    margin-left: 5%;
+}
+
+.menu>p {
+    float: right;
+    margin-right: 5%;
+}
+
+.menuTitle {
+    width: 90%;
+    display: inline-block;
+    margin-bottom: -5px;
+}
+
+.menuTitle>h4:first-child {
+    float: left;
+    margin-left: 10%;
+}
+
+.menuTitle>h4:last-child {
+    float: right;
+    margin-right: 5%;
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.pageNumbers {
+    display: flex;
+    gap: 5px;
+}

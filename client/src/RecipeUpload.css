@@ -1,0 +1,75 @@
+#uploadForm {
+    overflow: hidden;
+    width: 90%;
+}
+
+#uploadForm>input {
+    float: right;
+    font-size: 1.5em;
+    width: 20vw;
+    height: 8vh;
+    margin-top: 20px;
+    margin-right: 20px;
+    border: 0px;
+    background-color: rgba(150, 200, 200, 0.5);
+    border-radius: 20px;
+}
+
+#uploadForm>input:hover {
+    color: rgb(0, 176, 150);
+    background-color: rgba(150, 200, 200, 0.9);
+}
+
+#uploadForm>div {
+    width: 100%;
+    text-align: center;
+}
+
+#uploadForm>div>h3 {
+    width: 100%;
+    text-align: left;
+}
+
+#uploadForm>div>input {
+    width: 80%;
+    height: 30px;
+    margin: 10px;
+}
+
+#cssProcess {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#cssProcess>input {
+    width: 15%;
+    border: none;
+    padding: 10px 5px;
+    font-weight: bold;
+    margin-right: 20px;
+    cursor: pointer;
+    background-color: rgb(0, 176, 150);
+}
+
+#cssProcess>input:hover {
+    background-color: rgb(1, 113, 97);
+}
+
+#previewPhoto {
+    width:30%;
+    margin-top:10px;
+    border:2px solid black;
+    margin:0 auto;
+}
+
+#previewPhoto>img{
+    max-width: 100%;
+    vertical-align: bottom;
+}
+
+#photoInput {
+    display: flex;
+    margin-left:auto;
+    padding:20px;
+}

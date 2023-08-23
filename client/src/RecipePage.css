@@ -1,0 +1,43 @@
+form {
+    padding: 10px;
+    width: 90%;
+    margin:0 auto;
+}
+
+form>input:first-child {
+    height: 20px;
+}
+
+form>input:nth-child(2) {
+    margin-left: 10px;
+    width: 50px;
+    font-weight: bold;
+    background-color: rgb(74, 132, 83);
+    color: white;
+    padding: 7px 10px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    border-radius: 10px;
+}
+
+form>input:nth-child(2):hover {
+    background-color: rgb(47, 75, 51);
+}
+
+form>input:nth-child(3) {
+    float: right;
+    margin-right: 10px;
+    font-weight: bold;
+    background-color: rgb(136, 118, 238);
+    color: white;
+    padding: 7px 10px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    border-radius: 10px;
+}
+
+form>input:nth-child(3):hover {
+    background-color: rgb(94, 70, 235);
+}
