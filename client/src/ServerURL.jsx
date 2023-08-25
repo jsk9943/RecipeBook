@@ -1,4 +1,2 @@
-// export const SERVERURL = 'http://192.168.0.41';
-// export const PORT = '5555';
-export const SERVERURL = 'http://localhost';
-export const PORT = '5555';
+export const SERVERURL = 'http://kjnas7486.direct.quickconnect.to';
+export const PORT = '9000';

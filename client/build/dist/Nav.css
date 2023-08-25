@@ -1,0 +1,33 @@
+nav {
+    width: 90%;
+    margin:0 auto;
+    overflow: hidden;
+}
+
+nav>ul {
+    margin: 0 auto;
+    padding: 0px;
+}
+
+nav>ul>li {
+    margin:1%;
+    margin-top:2%;
+    list-style: none;
+    float: left;
+    border:none;
+    box-sizing: border-box;
+    border-radius: 20px;
+    width: 48%;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.2);
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2em;
+    transition: all 0.3s;
+}
+
+nav>ul>li:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    cursor:pointer;
+}

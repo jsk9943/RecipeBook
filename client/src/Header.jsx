@@ -17,7 +17,7 @@ const Header = () => {
                 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
             </style>
             <div>
-                <span onClick={handleSpanClick}>Insight365 Recipe Book</span>
+                <span onClick={handleSpanClick}>Recipe Book</span>
             </div>
         </header>
     )

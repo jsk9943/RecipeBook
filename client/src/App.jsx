@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Nav from './Nav';
 import './App.css';
 import RecipePage from './RecipePage';

@@ -1,9 +1,9 @@
 import express from 'express';
 import multer from 'multer';
 import cors from 'cors';
-import { allRecipe, searchRecipe, recipeDetail, recipeUpload, recipeDelete, readPhotoFile, recipeExists, readComment, commentAddData, reciepVerifyPassword } from './Storage.js';
+import { allRecipe, searchRecipe, recipeDetail, recipeUpload, recipeDelete, recipeReadPhoto, recipeExists, readComment, commentAddData, reciepVerifyPassword } from './Storage.js';
 const app = express();
-const PORT = 5555;
+const PORT = 9000;
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, '../storage/img')
@@ -13,7 +13,6 @@ const storage = multer.diskStorage({
     }
 })
 const upload = multer({ storage: storage });
-//post에서 body로 들어오는 데이터 파싱하기 위한 라이브러리 등록
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors());
@@ -42,7 +41,7 @@ app.get('/recipe', async (req, res) => {
     try {
         const recipeName = req.query.recipeName;
         const recipeData = await recipeDetail(recipeName);
-        const photoData = await readPhotoFile(recipeName);
+        const photoData = await recipeReadPhoto(recipeName);
         const commentData = await readComment(recipeName);
         if (photoData !== null) {
             res.json({ success: true, data: { recipeData, photoData: photoData.toString('base64'), commentData } });
@@ -80,8 +79,8 @@ app.post('/recipe/upload', upload.single('file'), async (req, res) => {
         const recipeData = req.body;
         recipeData.recipeContents = JSON.parse(recipeData.recipeContents);
         recipeData.recipePassword = JSON.parse(recipeData.recipePassword);
-        await recipeUpload(recipeData);
-        res.send('success');
+        const result = await recipeUpload(recipeData);
+        res.send(result);
     } catch (error) {
         res.send(error);
     }

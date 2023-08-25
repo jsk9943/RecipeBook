@@ -10,7 +10,6 @@ import './RecipeUpload.css';
 import { RecipeContext } from "./context/RecipeContext";
 import { recipeRefresh } from "./RecipeRefresh";
 
-
 const RecipeUpload = () => {
     // 새롭게 생성할 레시피 state
     const [recipeName, setRecipeName] = useState('');
@@ -58,7 +57,7 @@ const RecipeUpload = () => {
         }
         // 같은 레시피 이름이 있을 경우
         const response = await axios.get(`${SERVERURL}:${PORT}/recipeExist?recipeName=${recipeName}`)
-        if (response.data.recipeName === recipeName) {
+        if (response.data) {
             alert(`${recipeName} 요리는 이미 등록되어있는 요리 입니다`)
             return;
         }
@@ -80,7 +79,7 @@ const RecipeUpload = () => {
         }
         // 삭제 시 필요한 패스워드 등록
         const recipePassword = window.prompt(`삭제 시 필요한 비밀번호를 입력하세요\n(미 입력 시 레시피 등록 불가)`);
-        if(recipePassword === ''){
+        if (recipePassword === '') {
             alert('비밀번호 미 입력으로 등록 실패');
             return;
         }
@@ -118,6 +117,9 @@ const RecipeUpload = () => {
                 }
             })
             alert(response.data)
+            if (response.data === "파일 유효성 검증 실패") {
+                return;
+            }
             recipeRefresh(dispatch);
             navigate('/recipeRead');
         } catch (error) {

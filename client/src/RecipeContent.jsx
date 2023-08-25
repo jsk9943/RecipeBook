@@ -4,6 +4,7 @@ import axios from "axios";
 import { RecipeContext } from "./context/RecipeContext";
 import './RecipeContent.css';
 import Comment from "./Comment";
+import { recipeRefresh } from "./RecipeRefresh";
 
 // 특정 레시피 return 태그
 const RecipeContent = () => {
@@ -26,9 +27,7 @@ const RecipeContent = () => {
             }
             const deleteResult = await axios.delete(`${SERVERURL}:${PORT}/recipe/delete/${recipeName}`); // 삭제할 레피시 전달
             alert(`${deleteResult.data}`); // 삭제 완료 안내
-            const refreshecipeDatas = await axios.get(`${SERVERURL}:${PORT}/allRecipe.do`) // 레시피 명단 새로고침
-            dispatch({ type: 'set_Recipe_Data', payload: refreshecipeDatas.data })
-            dispatch({ type: 'set_Display_Content', payload: "RecipeContents" })
+            recipeRefresh(dispatch);
         } catch (error) {
             alert(`삭제 도중 ${error}가 발생하여 실패`)
         }
