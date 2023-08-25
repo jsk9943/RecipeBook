@@ -51,13 +51,13 @@ const App = () => {
 
   return (
     <RecipeContext.Provider value={{ dispatch, state }}>
-      <article>
-        <Nav />
-        <Routes>
-          <Route path="/recipeRead" element={<RecipePage />} />
-          <Route path="/recipeUploadForm" element={<RecipeUpload />} />
-        </Routes>
-      </article>
+        <article>
+          <Nav />
+          <Routes>
+            <Route path="/recipeRead" element={<RecipePage />} />
+            <Route path="/recipeUploadForm" element={<RecipeUpload />} />
+          </Routes>
+        </article>
     </RecipeContext.Provider>
   )
 };

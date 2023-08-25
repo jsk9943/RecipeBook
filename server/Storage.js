@@ -11,7 +11,6 @@ async function recipeStorage() {
     const fileContents = await fsPromises.readFile(filePath, 'utf-8');
     return JSON.parse(fileContents);
 }
-
 // 각각의 레시피 불러오기
 async function readJSONFile(filename) {
     const filePath = path.join(storagePath, filename);
@@ -29,6 +28,29 @@ async function readPhotoFile(recipeName) {
     } catch (error) {
         return null;
     }
+}
+// 각각의 레시피 댓글 불러오기
+async function readComment(recipeName) {
+    try {
+        const jsonData = await recipeDetail(recipeName);
+        const commentFileName = jsonData.recipeComment;
+        const commentFilePath = path.join(storagePath, 'comment', commentFileName);
+        const readCommentData = await fsPromises.readFile(commentFilePath, 'utf8');
+        return JSON.parse(readCommentData);
+    } catch (error) {
+        return null;
+    }
+}
+// 레시피 댓글 추가 하기
+const commentAddData = async (commentData, recipeName) => {
+    const jsonData = await recipeDetail(recipeName);
+    const commentFileName = jsonData.recipeComment;
+    const commentFilePath = path.join(storagePath, 'comment', commentFileName);
+    const readCommentData = await fsPromises.readFile(commentFilePath, 'utf8');
+    const jsonCommentData = JSON.parse(readCommentData);
+    jsonCommentData.comment.unshift(commentData)
+    const updatedCommentData = JSON.stringify(jsonCommentData, null, 2);
+    await fsPromises.writeFile(commentFilePath, updatedCommentData, 'utf8');
 }
 // 초기 불러오는 모든 레시피
 async function allRecipe() {
@@ -87,25 +109,41 @@ async function recipeUpload(recipeData) {
     const formattedDate = `${year}-${month}-${day}`; // YYYY-MM-DD 형식으로 조합
     const randomString = Math.random().toString(36).substring(2, 12); // 36진수 랜덤 문자열 10자리 생성
     const newFileName = `${formattedDate}-${randomString}.json`;
+    const newCommentFileName = `co-${formattedDate}-${randomString}.json`
+    const newRecipeData = {
+        ...recipeData,
+        recipeComment: newCommentFileName,
+    }
     jsonData[recipeData.recipeName] = newFileName;
     const filePath = path.join(storagePath, 'RecipeStorage.json');
     await fsPromises.writeFile(filePath, JSON.stringify(jsonData));
     const newFilePath = path.join(storagePath, newFileName);
-    await fsPromises.writeFile(newFilePath, JSON.stringify(recipeData));
+    await fsPromises.writeFile(newFilePath, JSON.stringify(newRecipeData));
+    const newCommentFilePath = path.join(storagePath, 'comment', newCommentFileName);
+    const newCommentFile = { comment: [] };
+    await fsPromises.writeFile(newCommentFilePath, JSON.stringify(newCommentFile));
+}
+// 삭제하기 전 레시피 등록된 비밀번호 일치여부 확인
+const reciepVerifyPassword = async (recipeName, recipePassword) => {
+    const jsonData = await recipeDetail(recipeName)
+    const isPasswordValid = jsonData.recipePassword.some(password => password === recipePassword);
+    return isPasswordValid;
 }
 // 삭제 요청 들어온 레시피 파일 삭제 및 리스트 명단 삭제
 const recipeDelete = async (recipeName) => {
     const filePath = path.join(storagePath, 'RecipeStorage.json'); // 전체 레시피 명단
     const jsonData = await recipeStorage(); // 전체 레시피명단 JSON 데이터 가져오기
-    const deleteFilePath = path.join(storagePath, jsonData[recipeName]); // 삭제 할 레시피 파일명 가져오기
+    const deleteFilePath = path.join(storagePath, jsonData[recipeName]); // 삭제 할 레시피 파일경로 가져오기
     const jsonData2 = await recipeDetail(recipeName);
     const fileName = jsonData2.recipePhoto;
     if (fileName) {
         const photoFilePath = path.join(storagePath, 'img', fileName);
         await fsPromises.unlink(photoFilePath); // 레시피 사진파일 삭제
     }
+    const deleteCommentFilePath = path.join(storagePath, 'comment', `co-${jsonData[recipeName]}`); // 삭제 할 레시피 댓글 파일경로 가져오기
     delete jsonData[recipeName]; // 레시피 명단에서 레시피 삭제
     await fsPromises.unlink(deleteFilePath); // 레시피 파일 삭제
+    await fsPromises.unlink(deleteCommentFilePath); // 레시피 코멘트 파일 삭제
     await fsPromises.writeFile(filePath, JSON.stringify(jsonData)); // 삭제한 레시피 명단 갱신
 }
-export { allRecipe, searchRecipe, recipeDetail, recipeUpload, recipeDelete, readPhotoFile, recipeExists };
+export { allRecipe, searchRecipe, recipeDetail, recipeUpload, recipeDelete, readPhotoFile, recipeExists, readComment, commentAddData, reciepVerifyPassword };

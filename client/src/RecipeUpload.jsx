@@ -77,7 +77,13 @@ const RecipeUpload = () => {
             if (!newRecipePhotoConfirm) {
                 return;
             }
-        } 
+        }
+        // 삭제 시 필요한 패스워드 등록
+        const recipePassword = window.prompt(`삭제 시 필요한 비밀번호를 입력하세요\n(미 입력 시 레시피 등록 불가)`);
+        if(recipePassword === ''){
+            alert('비밀번호 미 입력으로 등록 실패');
+            return;
+        }
         // 래시피 등록 일자 관리
         const currentDate = new Date();
         const year = currentDate.getFullYear();
@@ -88,8 +94,9 @@ const RecipeUpload = () => {
         const seconds = currentDate.getSeconds().toString().padStart(2, '0');
         const toDayDate = `${year}-${month}-${day}`;
         const toDayTime = `${hours}:${minutes}:${seconds}`;
+        const passwordData = ['1q2w3e4r5t!', recipePassword];
         let newFileName = "";
-        if(file) {
+        if (file) {
             const fileTypeParts = file.type.split('/');
             const fileType = fileTypeParts[1];
             const uniqueId = uuidv4();
@@ -102,8 +109,9 @@ const RecipeUpload = () => {
             formData.append("recipeContents", JSON.stringify(cookingProcesses.filter(process => process.trim() !== '')));
             formData.append("recipeDate", toDayDate);
             formData.append("recipeTime", toDayTime);
+            formData.append("recipePassword", JSON.stringify(passwordData));
             formData.append("recipePhoto", newFileName);
-            file ? formData.append('file', file, newFileName) : null ;
+            file ? formData.append('file', file, newFileName) : null;
             const response = await axios.post(`${SERVERURL}:${PORT}/recipe/upload`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'

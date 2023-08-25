@@ -1,0 +1,51 @@
+.commentArea {
+    background-color: rgba(46, 214, 63, 0.2);
+    border-radius: 50px;
+    margin-top: 100px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    padding: 20px;
+    overflow: hidden;
+    width: 100%;
+}
+
+.commentArea>div>p {
+    border-bottom: 3px solid black;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 80%;
+    font-size:0.9em;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.commentArea>div>p>span {
+    font-weight: bold;
+}
+
+.commentArea>form{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+}
+
+.commentArea>form>input {
+    width: 50%;
+}
+
+.commentArea>form>button {
+    margin-top:10px;
+    width: 15%;
+    padding:5px;
+    border:none;
+    background-color: rgba(46, 208, 54, 0.5);
+    cursor: pointer;
+    border-radius: 20px;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.commentArea>form>button:hover {
+    background-color: rgba(16, 118, 72, 0.748);
+}

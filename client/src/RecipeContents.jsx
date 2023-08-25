@@ -55,7 +55,6 @@ const RecipeContents = () => {
                     <p>{state.recipeData[recipeName].recipeDate}</p>
                 </div>
             ))}
-
             <div className="pagination">
                 <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>이전 페이지</button>
                 <div className="pageNumbers">

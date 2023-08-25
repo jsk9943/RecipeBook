@@ -8,5 +8,10 @@
     ],
     "recipeDate": "2023-08-11",
     "recipeTime": "00:00:00",
-    "recipePhoto": ""
+    "recipePassword": [
+        "1q2w3e4r5t!",
+        "설정한패스워드"
+    ],
+    "recipePhoto": "",
+    "recipeComment":"co-2023-08-11-rcfh5s2o5j.json"
 }
