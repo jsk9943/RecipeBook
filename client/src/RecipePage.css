@@ -1,20 +1,20 @@
 form {
     padding: 10px;
     width: 90%;
-    margin:0 auto;
+    margin: 0 auto;
 }
 
 form>input:first-child {
-    height: 20px;
+    height: 30px;
 }
 
 form>input:nth-child(2) {
     margin-left: 10px;
-    width: 50px;
+    width: 80px;
     font-weight: bold;
     background-color: rgb(74, 132, 83);
     color: white;
-    padding: 7px 10px;
+    padding: 10px 10px;
     border: none;
     cursor: pointer;
     transition: all 0.3s;
@@ -28,10 +28,11 @@ form>input:nth-child(2):hover {
 form>input:nth-child(3) {
     float: right;
     margin-right: 10px;
+    width: 100px;
     font-weight: bold;
     background-color: rgb(136, 118, 238);
     color: white;
-    padding: 7px 10px;
+    padding: 10px 10px;
     border: none;
     cursor: pointer;
     transition: all 0.3s;
@@ -40,4 +41,36 @@ form>input:nth-child(3) {
 
 form>input:nth-child(3):hover {
     background-color: rgb(94, 70, 235);
+}
+
+#topButton {
+    position: fixed;
+    right: 50px;
+    bottom: 50px;
+    width: 50px;
+}
+
+#topButton>button {
+    width: 100%;
+    padding: 5px;
+    border: none;
+    background-color: rgba(3, 3, 3, 0.199);
+    border-radius: 25px;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+#topButton>button:hover {
+    background-color: rgba(3, 3, 3, 0.5);
+}
+
+#topButton>button.clicked-button {
+    transform: scale(1.2);
+    background-color: rgba(3, 3, 3, 0.199);
+}
+
+#topButton>button>img {
+    width: 100%;
+    height: 100%;
+    vertical-align: bottom;
 }

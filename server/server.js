@@ -6,7 +6,7 @@ const app = express();
 const PORT = 9000;
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, '../storage/img')
+        cb(null, './storage/img')
     },
     filename: function (req, file, cb) {
         cb(null, file.originalname)
@@ -77,6 +77,7 @@ app.get('/recipeExist', async (req, res) => {
 app.post('/recipe/upload', upload.single('file'), async (req, res) => {
     try {
         const recipeData = req.body;
+        recipeData.recipeDescription = JSON.parse(recipeData.recipeDescription);
         recipeData.recipeContents = JSON.parse(recipeData.recipeContents);
         recipeData.recipePassword = JSON.parse(recipeData.recipePassword);
         const result = await recipeUpload(recipeData);

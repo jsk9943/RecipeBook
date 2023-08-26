@@ -7,14 +7,14 @@ import RecipeContents from './RecipeContents';
 import RecipeContent from "./RecipeContent";
 import axios from 'axios';
 import './RecipePage.css';
+import topButton from './icon/topbutton.png';
 import { RecipeContext } from "./context/RecipeContext";
 import { recipeRefresh } from "./RecipeRefresh";
 
-// const RecipePage = (props) => {
 const RecipePage = () => {
     const { dispatch, state } = useContext(RecipeContext);
     const [recipeSearchWord, setRecipeSearchWord] = useState(); // 검색 단어 상태변경을 위한 useState 사용
-
+    const [clicked, setClicked] = useState(false);
     // 특정 레시피만 단어로 찾아오기
     const searchButtonClickEvent = async (event) => {
         event.preventDefault(); // form 양식 초기화 방지
@@ -34,7 +34,17 @@ const RecipePage = () => {
             recipeRefresh(dispatch);
         }
     }
-
+    // top 버튼 클릭 시 스크롤 상단
+    const scrollTop = () => {
+        setClicked(true)
+        setTimeout(() => {
+            setClicked(false)
+        }, 300);
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
     return (
         <div>
             <form onSubmit={searchButtonClickEvent}>
@@ -50,6 +60,11 @@ const RecipePage = () => {
             ) : (
                 <RecipeContent />
             )}
+            <div id="topButton">
+                <button type="button" onClick={scrollTop} className={clicked ? "clicked-button" : ""}>
+                    <img src={topButton} alt="화면 상단으로" />
+                </button>
+            </div>
         </div>
     )
 }

@@ -11,17 +11,52 @@
     text-align: center;
     display: inline-block;
     cursor: pointer;
+    transition: all 0.3s;
+}
+
+.menu:hover {
+    transform: scale(1.1);
 }
 
 .menu>h2 {
     float: left;
-    margin-left: 5%;
+    width: 35%;
 }
 
 .menu>p {
     float: right;
+    width: 15%;
     margin-right: 5%;
 }
+
+.recipeDescriptionContent {
+    float: left;
+    text-align: center;
+    width: 40%;
+    text-align: center;
+}
+
+.fade-in-text {
+    opacity: 0;
+    font-size: 0.7em;
+    height: 100%;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.fade-in-text.show {
+    opacity: 1;
+}
+
+.fade-in-text>p {
+    font-weight: bold;
+    font-size: 0.8em;
+    color: rgba(128, 128, 128, 0.573);
+    text-align: left;
+}
+
+
+
+
 
 .menuTitle {
     width: 90%;
@@ -40,24 +75,25 @@
 }
 
 .pagination {
+    margin-top: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 20px;
 }
 
 .pagination>button {
     border: none;
     background-color: rgb(112, 112, 253);
-    color:white;
+    color: white;
     font-weight: bold;
     cursor: pointer;
-    transition:all 0.3s;
-    padding:10px;
+    transition: all 0.3s;
+    padding: 10px;
     border-radius: 10px;
 }
 
-.pagination>button:hover{
+.pagination>button:hover {
     background-color: rgb(50, 50, 255);
 }
 
@@ -69,14 +105,14 @@
 .pageNumbers>button {
     border: none;
     background-color: rgb(112, 112, 253);
-    color:white;
+    color: white;
     font-weight: bold;
     cursor: pointer;
-    transition:all 0.3s;
-    padding:10px;
+    transition: all 0.3s;
+    padding: 10px;
     border-radius: 5px;
 }
 
-.pageNumbers>button:hover{
+.pageNumbers>button:hover {
     background-color: rgb(50, 50, 255);
 }

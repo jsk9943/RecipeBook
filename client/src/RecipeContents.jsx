@@ -1,7 +1,7 @@
 /**
  * 받아온 레시피Data를 순서에 맞춰 html 태그로 return 해주는 js
  */
-import React, { useContext, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { SERVERURL, PORT } from './ServerURL';
 import axios from "axios";
 import './RecipeContents.css';
@@ -10,14 +10,21 @@ import { RecipeContext } from "./context/RecipeContext";
 // 전체 레시피 return 태그
 const RecipeContents = () => {
     const { dispatch, state } = useContext(RecipeContext); // 컴포넌트 호출 시 전달받은 props의 값을 저장
-
+    const [hoveredRecipe, setHoveredRecipe] = useState(null); //호버 시 description 노출
+    // 마우스 올리면 클래스 명 show가 붙으면서 desc 노출
+    const handleMouseHover = (data) => {
+        setHoveredRecipe(data);
+    };
+    // 마우스가 떠나면 클래스명 show가 삭제되면서 desc 비노출
+    const handleMouseLeave = () => {
+        setHoveredRecipe(null);
+    };
     const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호 상태
     const recipesPerPage = 5; // 페이지당 레시피 수
     const recipeKeys = Object.keys(state.recipeData);
     const startIdx = (currentPage - 1) * recipesPerPage;
     const endIdx = startIdx + recipesPerPage;
     const recipesToShow = useMemo(() => recipeKeys.slice(startIdx, endIdx), [recipeKeys, startIdx, endIdx]);
-
     // 클릭한 요소의 레시피 이름 가져와서 조리방법 보여주기
     const recipeClickEvent = async (event) => {
         event.preventDefault();
@@ -42,7 +49,6 @@ const RecipeContents = () => {
             console.error(response.data.error);
         }
     }
-
     return (
         <div className="menuDiv">
             <div className="menuTitle">
@@ -50,9 +56,19 @@ const RecipeContents = () => {
                 <h4>레시피 작성일자</h4>
             </div>
             {recipesToShow.map((recipeName) => (
-                <div key={recipeName} className="menu" onClick={recipeClickEvent}>
+                <div key={recipeName} className={"menu"} onClick={recipeClickEvent} onMouseEnter={() => handleMouseHover(state.recipeData[recipeName].recipeDescription)} onMouseLeave={handleMouseLeave}>
                     <h2>{state.recipeData[recipeName].recipeName}</h2>
                     <p>{state.recipeData[recipeName].recipeDate}</p>
+                    <div className="recipeDescriptionContent">
+                        <div className={`fade-in-text ${hoveredRecipe === state.recipeData[recipeName].recipeDescription && hoveredRecipe !== '' ? 'show' : ''}`}>
+                            <p>음식소개</p>
+                            {
+                                state.recipeData[recipeName].recipeDescription.length > 30
+                                    ? state.recipeData[recipeName].recipeDescription.slice(0, 30) + "..."
+                                    : state.recipeData[recipeName].recipeDescription
+                            }
+                        </div>
+                    </div>
                 </div>
             ))}
             <div className="pagination">

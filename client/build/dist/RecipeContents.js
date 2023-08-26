@@ -1,10 +1,17 @@
-import React, {useContext, useMemo, useState} from "../_snowpack/pkg/react.js";
+import React, {useContext, useEffect, useMemo, useRef, useState} from "../_snowpack/pkg/react.js";
 import {SERVERURL, PORT} from "./ServerURL.js";
 import axios from "../_snowpack/pkg/axios.js";
 import "./RecipeContents.css.proxy.js";
 import {RecipeContext} from "./context/RecipeContext.js";
 const RecipeContents = () => {
   const {dispatch, state} = useContext(RecipeContext);
+  const [hoveredRecipe, setHoveredRecipe] = useState(null);
+  const handleMouseHover = (data) => {
+    setHoveredRecipe(data);
+  };
+  const handleMouseLeave = () => {
+    setHoveredRecipe(null);
+  };
   const [currentPage, setCurrentPage] = useState(1);
   const recipesPerPage = 5;
   const recipeKeys = Object.keys(state.recipeData);
@@ -41,8 +48,14 @@ const RecipeContents = () => {
   }, /* @__PURE__ */ React.createElement("h4", null, "레시피 제목"), /* @__PURE__ */ React.createElement("h4", null, "레시피 작성일자")), recipesToShow.map((recipeName) => /* @__PURE__ */ React.createElement("div", {
     key: recipeName,
     className: "menu",
-    onClick: recipeClickEvent
-  }, /* @__PURE__ */ React.createElement("h2", null, state.recipeData[recipeName].recipeName), /* @__PURE__ */ React.createElement("p", null, state.recipeData[recipeName].recipeDate))), /* @__PURE__ */ React.createElement("div", {
+    onClick: recipeClickEvent,
+    onMouseEnter: () => handleMouseHover(state.recipeData[recipeName].recipeDescription),
+    onMouseLeave: handleMouseLeave
+  }, /* @__PURE__ */ React.createElement("h2", null, state.recipeData[recipeName].recipeName), /* @__PURE__ */ React.createElement("p", null, state.recipeData[recipeName].recipeDate), /* @__PURE__ */ React.createElement("div", {
+    className: "recipeDescriptionContent"
+  }, /* @__PURE__ */ React.createElement("div", {
+    className: `fade-in-text ${hoveredRecipe === state.recipeData[recipeName].recipeDescription && hoveredRecipe !== "" ? "show" : ""}`
+  }, /* @__PURE__ */ React.createElement("p", null, "음식소개"), state.recipeData[recipeName].recipeDescription.length > 30 ? state.recipeData[recipeName].recipeDescription.slice(0, 30) + "..." : state.recipeData[recipeName].recipeDescription)))), /* @__PURE__ */ React.createElement("div", {
     className: "pagination"
   }, /* @__PURE__ */ React.createElement("button", {
     onClick: () => setCurrentPage(currentPage - 1),

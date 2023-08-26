@@ -9,5 +9,6 @@ var useContext = react.useContext;
 var useEffect = react.useEffect;
 var useMemo = react.useMemo;
 var useReducer = react.useReducer;
+var useRef = react.useRef;
 var useState = react.useState;
-export { createContext, useCallback, useContext, useEffect, useMemo, useReducer, useState };
+export { createContext, useCallback, useContext, useEffect, useMemo, useReducer, useRef, useState };

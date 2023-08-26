@@ -54,35 +54,47 @@ const commentAddData = async (commentData, recipeName) => {
 }
 // 초기 불러오는 모든 레시피
 const allRecipe = async () => {
-    const recipeData = {};
+    const allRecipeData = {};
     const jsonData = await listOfAllRecipes();
     for (const recipeName in jsonData) {
         const filename = jsonData[recipeName];
+        const recipeData = await recipeRead(filename);
+        if (recipeData.recipeDescription === null || recipeData.recipeDescription === undefined) {
+            recipeData.recipeDescription = '';
+        }
+        const recipeDescription = recipeData.recipeDescription;
         const dataMatch = filename.match(/\d{4}-\d{2}-\d{2}/);
         const recipeDate = dataMatch ? dataMatch[0] : null;
-        recipeData[recipeName] = {
-            recipeName: recipeName,
-            recipeDate: recipeDate,
+        allRecipeData[recipeName] = {
+            recipeName,
+            recipeDescription,
+            recipeDate,
         };
     }
-    return recipeData;
+    return allRecipeData;
 }
 // 검색한 레시피만 불러오기
 const searchRecipe = async (recipeWord) => {
-    let recipeData = {};
+    let allRecipeData = {};
     const jsonData = await listOfAllRecipes();
     for (const recipeName in jsonData) {
         if (recipeName.includes(recipeWord)) {
             const filename = jsonData[recipeName];
+            const recipeData = await recipeRead(filename);
+            if (recipeData.recipeDescription === null || recipeData.recipeDescription === undefined) {
+                recipeData.recipeDescription = '';
+            }
+            const recipeDescription = recipeData.recipeDescription;
             const dataMatch = filename.match(/\d{4}-\d{2}-\d{2}/);
             const recipeDate = dataMatch ? dataMatch[0] : null;
-            recipeData[recipeName] = {
-                recipeName: recipeName,
-                recipeDate: recipeDate,
+            allRecipeData[recipeName] = {
+                recipeName,
+                recipeDescription,
+                recipeDate,
             }
         }
     }
-    return recipeData;
+    return allRecipeData;
 }
 // 클릭한 레시피 불러오기
 const recipeDetail = async (recipeName) => {

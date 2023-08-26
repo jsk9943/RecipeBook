@@ -11,48 +11,47 @@ import { RecipeContext } from "./context/RecipeContext";
 import { recipeRefresh } from "./RecipeRefresh";
 
 const RecipeUpload = () => {
-    // 새롭게 생성할 레시피 state
+    // 새 레시피 state
     const [recipeName, setRecipeName] = useState('');
-
+    // 레시피 설명 state
+    const [recipeDescription, setRecipeDescription] = useState('');
+    // 레시피 프로세스 state
+    const [cookingProcesses, setCookingProcesses] = useState(Array(3).fill(''));
     // 레시피 사진파일
     const [file, setFile] = useState(null);
     const [previewUrl, setPreviewUrl] = useState(null);
-
-    // 새롭게 생성할 레시피 프로세스 state
-    const [cookingProcesses, setCookingProcesses] = useState(Array(3).fill(''));
-
     // App 컴포넌트에서 사용하는 state 가져오기
     const { dispatch } = useContext(RecipeContext)
-
     // 리액트 라우터와 연결시킬 네비게이트 명령어
     const navigate = useNavigate();
-
     // 입력된 조리순서를 index 순서대로 받아서 processInputData(cookingProcesses의 빈 배열)에 입력 후 set으로 입력
     const processInput = (index, value) => {
         const processInputData = [...cookingProcesses]; // 불변성을 지키기 위한 코드(초기 비어있는 배열이지만 그럼에도 입력하는 편이 좋음)
         processInputData[index] = value;
         setCookingProcesses(processInputData);
     }
-
     // 조리순서 추가 시 입력 할 cookingProcesses 내 배열을 늘리는 기능
     const addCookingProcess = () => {
         if (cookingProcesses.length < 100) {
             setCookingProcesses([...cookingProcesses, '']);
         }
     }
-
     // 업로드 하기 위한 파일 선택 시
     const fileInput = (event) => {
         const selectedFile = event.target.files[0];
         setFile(selectedFile);
         setPreviewUrl(URL.createObjectURL(selectedFile))
     }
-
     const recepiFormUpload = async (event) => {
         event.preventDefault();
         // 레시피명이 없을 경우
         if (recipeName.trim() === '') {
             alert('음식명을 입력해주세요.');
+            return;
+        }
+        // 레시피명 제한
+        if (recipeName.length > 10) {
+            alert('요리명은 10자를 넘을 수 없습니다.');
             return;
         }
         // 같은 레시피 이름이 있을 경우
@@ -105,6 +104,7 @@ const RecipeUpload = () => {
         try {
             const formData = new FormData();
             formData.append("recipeName", recipeName);
+            formData.append("recipeDescription", JSON.stringify(recipeDescription));
             formData.append("recipeContents", JSON.stringify(cookingProcesses.filter(process => process.trim() !== '')));
             formData.append("recipeDate", toDayDate);
             formData.append("recipeTime", toDayTime);
@@ -134,6 +134,19 @@ const RecipeUpload = () => {
                 <div>
                     <h3>음식명</h3>
                     <input type="text" placeholder='음식명' value={recipeName} onChange={(event) => setRecipeName(event.target.value)} />
+
+                    <h3>음식소개</h3>
+                    <div id="foodDescription" contentEditable="true" onInput={(event) => setRecipeDescription(event.target.innerText)} />
+
+                    <h3>조리과정</h3>
+                        {cookingProcesses.map((process, index) => (
+                            // cookingProcesses 배열에서 받아온 index를 각 index에 맞춰 event.target.value 값을 입력
+                            <input key={index} type="text" placeholder={`조리순서 ${index + 1}`} value={process} onChange={(event) => processInput(index, event.target.value)} />
+                        ))}
+                    <div id="cssProcess">
+                        <button type="button" onClick={addCookingProcess}>조리과정<br/>추가하기</button>
+                    </div>
+
                     <h3>음식사진</h3>
                     <div>
                         <div id="previewPhoto">
@@ -145,16 +158,6 @@ const RecipeUpload = () => {
                         </div>
                         <input id="photoInput" type="file" onChange={fileInput} />
                     </div>
-                    <div id="cssProcess">
-                        <h3>조리과정</h3>
-                        {/** 버튼 클릭하면 조리순서 input 창 추가 */}
-                        <input type='button' value='순서 추가하기' onClick={addCookingProcess} />
-                    </div>
-                    {/** 생성된 cookingProcesses의 배열에 요소(process)와 index를 받아 input 요소를 생성 */}
-                    {cookingProcesses.map((process, index) => (
-                        // cookingProcesses 배열에서 받아온 index를 각 index에 맞춰 event.target.value 값을 입력
-                        <input key={index} type="text" placeholder={`조리순서 ${index + 1}`} value={process} onChange={(event) => processInput(index, event.target.value)} />
-                    ))}
                 </div>
                 <input type='submit' value='등록하기' />
             </form>

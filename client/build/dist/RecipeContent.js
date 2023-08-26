@@ -33,12 +33,18 @@ const RecipeContent = () => {
     className: "menuDetail"
   }, /* @__PURE__ */ React.createElement("div", {
     id: "recipePhotoSize"
-  }, /* @__PURE__ */ React.createElement("h2", null, state.recipeData.recipeName), state.recipePhotoData && /* @__PURE__ */ React.createElement("img", {
+  }, /* @__PURE__ */ React.createElement("h1", null, state.recipeData.recipeName), state.recipePhotoData && /* @__PURE__ */ React.createElement("img", {
     src: `data:image/jpeg;base64,${state.recipePhotoData}`,
     alt: state.recipeData.recipeName
-  })), /* @__PURE__ */ React.createElement("ol", null, state.recipeData.recipeContents.map((content, index) => /* @__PURE__ */ React.createElement("li", {
+  }), /* @__PURE__ */ React.createElement("div", {
+    id: "decriptionContent"
+  }, /* @__PURE__ */ React.createElement("h3", null, "음식소개"), /* @__PURE__ */ React.createElement("div", null, state.recipeData.recipeDescription ? state.recipeData.recipeDescription.split("\n").map((line, index) => /* @__PURE__ */ React.createElement(React.Fragment, {
     key: index
-  }, content))), /* @__PURE__ */ React.createElement("p", null, "작성일자 ", "[", " ", state.recipeData.recipeDate, " ", state.recipeData.recipeTime, " ", "]"), /* @__PURE__ */ React.createElement("input", {
+  }, line, /* @__PURE__ */ React.createElement("br", null))) : /* @__PURE__ */ React.createElement("span", null, "소개란이 비어있습니다")))), /* @__PURE__ */ React.createElement("div", {
+    id: "cookingProcess"
+  }, /* @__PURE__ */ React.createElement("h3", null, "요리방법"), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("ol", null, state.recipeData.recipeContents.map((content, index) => /* @__PURE__ */ React.createElement("li", {
+    key: index
+  }, content))))), /* @__PURE__ */ React.createElement("p", null, "작성일자 ", "[", " ", state.recipeData.recipeDate, " ", state.recipeData.recipeTime, " ", "]"), /* @__PURE__ */ React.createElement("input", {
     type: "button",
     value: "삭제",
     onClick: () => {

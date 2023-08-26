@@ -8,9 +8,10 @@ import {RecipeContext} from "./context/RecipeContext.js";
 import {recipeRefresh} from "./RecipeRefresh.js";
 const RecipeUpload = () => {
   const [recipeName, setRecipeName] = useState("");
+  const [recipeDescription, setRecipeDescription] = useState("");
+  const [cookingProcesses, setCookingProcesses] = useState(Array(3).fill(""));
   const [file, setFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
-  const [cookingProcesses, setCookingProcesses] = useState(Array(3).fill(""));
   const {dispatch} = useContext(RecipeContext);
   const navigate = useNavigate();
   const processInput = (index, value) => {
@@ -32,6 +33,10 @@ const RecipeUpload = () => {
     event.preventDefault();
     if (recipeName.trim() === "") {
       alert("음식명을 입력해주세요.");
+      return;
+    }
+    if (recipeName.length > 10) {
+      alert("요리명은 10자를 넘을 수 없습니다.");
       return;
     }
     const response = await axios.get(`${SERVERURL}:${PORT}/recipeExist?recipeName=${recipeName}`);
@@ -79,6 +84,7 @@ const RecipeUpload = () => {
     try {
       const formData = new FormData();
       formData.append("recipeName", recipeName);
+      formData.append("recipeDescription", JSON.stringify(recipeDescription));
       formData.append("recipeContents", JSON.stringify(cookingProcesses.filter((process) => process.trim() !== "")));
       formData.append("recipeDate", toDayDate);
       formData.append("recipeTime", toDayTime);
@@ -109,7 +115,22 @@ const RecipeUpload = () => {
     placeholder: "음식명",
     value: recipeName,
     onChange: (event) => setRecipeName(event.target.value)
-  }), /* @__PURE__ */ React.createElement("h3", null, "음식사진"), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("div", {
+  }), /* @__PURE__ */ React.createElement("h3", null, "음식소개"), /* @__PURE__ */ React.createElement("div", {
+    id: "foodDescription",
+    contentEditable: "true",
+    onInput: (event) => setRecipeDescription(event.target.innerText)
+  }), /* @__PURE__ */ React.createElement("h3", null, "조리과정"), cookingProcesses.map((process, index) => /* @__PURE__ */ React.createElement("input", {
+    key: index,
+    type: "text",
+    placeholder: `조리순서 ${index + 1}`,
+    value: process,
+    onChange: (event) => processInput(index, event.target.value)
+  })), /* @__PURE__ */ React.createElement("div", {
+    id: "cssProcess"
+  }, /* @__PURE__ */ React.createElement("button", {
+    type: "button",
+    onClick: addCookingProcess
+  }, "조리과정", /* @__PURE__ */ React.createElement("br", null), "추가하기")), /* @__PURE__ */ React.createElement("h3", null, "음식사진"), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("div", {
     id: "previewPhoto"
   }, previewUrl ? /* @__PURE__ */ React.createElement("img", {
     src: previewUrl,
@@ -118,18 +139,6 @@ const RecipeUpload = () => {
     id: "photoInput",
     type: "file",
     onChange: fileInput
-  })), /* @__PURE__ */ React.createElement("div", {
-    id: "cssProcess"
-  }, /* @__PURE__ */ React.createElement("h3", null, "조리과정"), /* @__PURE__ */ React.createElement("input", {
-    type: "button",
-    value: "순서 추가하기",
-    onClick: addCookingProcess
-  })), cookingProcesses.map((process, index) => /* @__PURE__ */ React.createElement("input", {
-    key: index,
-    type: "text",
-    placeholder: `조리순서 ${index + 1}`,
-    value: process,
-    onChange: (event) => processInput(index, event.target.value)
   }))), /* @__PURE__ */ React.createElement("input", {
     type: "submit",
     value: "등록하기"

@@ -17,7 +17,7 @@
     float: right;
     border: none;
     background-color: rgb(255, 0, 0);
-    width: 10%;
+    width: 80px;
     padding: 10px;
     font-weight: bold;
     transition: all 0.3s;
@@ -35,12 +35,65 @@
     width: 100%;
 }
 
-#recipePhotoSize>h2 {
-    float: left;
+#recipePhotoSize>h1 {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 #recipePhotoSize>img {
     float: right;
     vertical-align: bottom;
     width: 40%;
+    border-radius: 10px;
+}
+
+
+#decriptionContent {
+    display: flex;
+    flex-direction: column;
+    width: 55%;
+}
+
+#decriptionContent>h3 {
+    margin-top:30px;
+    width: 100%;
+    height: 100%;
+}
+
+
+#decriptionContent>div {
+    width: 100%;
+    text-align: center;
+    font-size: small;
+    font-weight: normal;
+}
+
+#decriptionContent>div>span{
+    color:rgba(0, 0, 0, 0.3);
+    font-weight: bold;
+}
+
+.menuDetail>h3{
+    margin-top:50px;
+}
+
+.menuDetail>ol {
+    font-size: small;
+    font-weight: normal;
+}
+
+#cookingProcess {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    text-align: center;
+    width:100%;
+}
+
+#cookingProcess>h3{
+    text-align: left;
+}
+
+#cookingProcess>div {
+    display:inline-block;
+    text-align: left;
+    width:80%;
 }
