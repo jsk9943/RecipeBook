@@ -8,6 +8,8 @@ http://kjnas7486.synology.me:9050/
 
 
 server : node.js express
+
 client : react
+
 storage : json
 
